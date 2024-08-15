@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "492855329888",
+    "project_id": "myfirebase-6a343",
+    "storage_bucket": "myfirebase-6a343.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:492855329888:android:4d1014deba65aec118ef05",
+        "android_client_info": {
+          "package_name": "com.boncel.myapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDuNL_7Bqq9Emw6LLPIB6-AwvR6U2HLU-U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
