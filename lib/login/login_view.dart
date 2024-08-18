@@ -27,8 +27,8 @@ class _LoginViewState extends State<LoginView> {
           children: [
             Image.asset(
               'asset/urindo.png',
-              width: 150,
-              height: 150,
+              width: 130,
+              height: 130,
             ),
             const SizedBox(
               height: 15,

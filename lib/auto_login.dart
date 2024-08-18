@@ -12,35 +12,38 @@ class AutoLogin extends StatelessWidget {
     return FutureBuilder(
       future: Future.delayed(const Duration(seconds: 1)),
       builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.done) {
-          return StreamBuilder(
-            stream: FirebaseAuth.instance.authStateChanges(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.active) {
-                return snapshot.hasData ? const HomeView() : const LoginView();
-              }
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Scaffold(
-                  body: Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                );
-              }
-              return const Scaffold(
-                body: Center(
-                  child: Text('Terjadi Kesalahan'),
-                ),
-              );
-            },
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Scaffold(
+            body: Center(
+              child: Image.asset(
+                'asset/urindo.png',
+                width: 100,
+              ),
+            ),
           );
         }
-        return Scaffold(
-          body: Center(
-            child: Image.asset(
-              'asset/urindo.png',
-              width: 150,
-            ),
-          ),
+        return StreamBuilder(
+          stream: FirebaseAuth.instance.authStateChanges(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.active) {
+              if (snapshot.hasData) {
+                return const HomeView();
+              }
+              return const LoginView();
+            }
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Scaffold(
+                body: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              );
+            }
+            return const Scaffold(
+              body: Center(
+                child: Text('Terjadi Kesalahan'),
+              ),
+            );
+          },
         );
       },
     );

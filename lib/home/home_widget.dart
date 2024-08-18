@@ -112,12 +112,13 @@ class _HomeWidgetState extends State<HomeWidget> {
               ),
               CarouselSlider(
                   items: controller.berita
-                      .map((e) => Container(
-                            width: MediaQuery.of(context).size.width,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20),
-                                image: DecorationImage(
-                                    image: NetworkImage(e), fit: BoxFit.fill)),
+                      .map((e) => ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: Image.network(
+                              e,
+                              width: MediaQuery.of(context).size.width,
+                              fit: BoxFit.fill,
+                            ),
                           ))
                       .toList(),
                   options: CarouselOptions(
@@ -159,37 +160,37 @@ class _HomeWidgetState extends State<HomeWidget> {
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
                       var data = snapshot.data!.docs;
-                      return data.isEmpty
-                          ? const Center(
-                              child: Text('Tidak ada jadwal hari ini'),
-                            )
-                          : Column(
-                              children: data.map((e) {
-                                var jadwal = e.data();
-                                return Container(
-                                  padding: const EdgeInsets.all(15),
-                                  margin: const EdgeInsets.only(bottom: 15),
-                                  decoration: BoxDecoration(
-                                      color: Colors.grey.shade300,
-                                      borderRadius: BorderRadius.circular(10)),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Expanded(
-                                        child: Text(
-                                          jadwal['matkul'],
-                                          style: const TextStyle(
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ),
-                                      Text(jadwal['jam'])
-                                    ],
+                      if (data.isEmpty) {
+                        return const Center(
+                          child: Text('Tidak ada jadwal hari ini'),
+                        );
+                      }
+                      return Column(
+                        children: data.map((e) {
+                          var jadwal = e.data();
+                          return Container(
+                            padding: const EdgeInsets.all(15),
+                            margin: const EdgeInsets.only(bottom: 15),
+                            decoration: BoxDecoration(
+                                color: Colors.grey.shade300,
+                                borderRadius: BorderRadius.circular(10)),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    jadwal['matkul'],
+                                    style: const TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold),
                                   ),
-                                );
-                              }).toList(),
-                            );
+                                ),
+                                Text(jadwal['jam'])
+                              ],
+                            ),
+                          );
+                        }).toList(),
+                      );
                     }
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const Center(
