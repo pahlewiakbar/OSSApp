@@ -1,21 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 import 'register_controller.dart';
 
-class RegisterView extends StatefulWidget {
+class RegisterView extends StatelessWidget {
   const RegisterView({super.key});
 
   @override
-  State<RegisterView> createState() => _RegisterViewState();
-}
-
-class _RegisterViewState extends State<RegisterView> {
-  RegisterController controller = RegisterController();
-  bool isObsecure = true;
-
-  @override
   Widget build(BuildContext context) {
+    var controller = RegisterController();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Buat Akun'),
@@ -39,32 +33,27 @@ class _RegisterViewState extends State<RegisterView> {
             const SizedBox(
               height: 15,
             ),
-            TextFormField(
-              autocorrect: false,
-              keyboardType: TextInputType.visiblePassword,
-              controller: controller.passC,
-              obscureText: isObsecure,
-              validator: controller.validatePassword,
-              decoration: InputDecoration(
-                  hintText: 'Password',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  suffixIcon: IconButton(
-                      onPressed: () {
-                        setState(() {
-                          isObsecure = !isObsecure;
-                        });
-                      },
-                      icon: !isObsecure
-                          ? const Icon(
-                              Icons.remove_red_eye,
-                              color: Colors.blue,
-                            )
-                          : const Icon(
-                              Icons.remove_red_eye,
-                              color: Colors.grey,
-                            ))),
+            Obx(
+              () => TextFormField(
+                autocorrect: false,
+                keyboardType: TextInputType.visiblePassword,
+                controller: controller.passC,
+                obscureText: controller.isObsecure.value,
+                validator: controller.validatePassword,
+                decoration: InputDecoration(
+                    hintText: 'Password',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    suffixIcon: IconButton(
+                        onPressed: () => controller.isObsecure.toggle(),
+                        icon: Icon(
+                          Icons.remove_red_eye,
+                          color: !controller.isObsecure.value
+                              ? Colors.blue
+                              : Colors.grey,
+                        ))),
+              ),
             ),
             const SizedBox(
               height: 15,
@@ -83,7 +72,6 @@ class _RegisterViewState extends State<RegisterView> {
               height: 15,
             ),
             DropdownButtonFormField(
-              value: controller.pilihKelamin,
               validator: controller.validateKelamin,
               decoration: InputDecoration(
                   hintText: 'Jenis Kelamin',
@@ -92,11 +80,7 @@ class _RegisterViewState extends State<RegisterView> {
               items: ['Laki-laki', 'Perempuan']
                   .map((e) => DropdownMenuItem(value: e, child: Text(e)))
                   .toList(),
-              onChanged: (value) {
-                setState(() {
-                  controller.pilihKelamin = value;
-                });
-              },
+              onChanged: (kelamin) => controller.pilihKelamin.value = kelamin!,
             ),
             const SizedBox(
               height: 15,
@@ -131,7 +115,6 @@ class _RegisterViewState extends State<RegisterView> {
               height: 15,
             ),
             DropdownButtonFormField(
-              value: controller.pilihProdi,
               validator: controller.validateProdi,
               decoration: InputDecoration(
                   hintText: 'Program Studi',
@@ -141,11 +124,7 @@ class _RegisterViewState extends State<RegisterView> {
                 'Ilmu Komputer',
                 'Sistem Informasi',
               ].map((e) => DropdownMenuItem(value: e, child: Text(e))).toList(),
-              onChanged: (value) {
-                setState(() {
-                  controller.pilihProdi = value;
-                });
-              },
+              onChanged: (prodi) => controller.pilihProdi.value = prodi!,
             ),
             const SizedBox(
               height: 15,

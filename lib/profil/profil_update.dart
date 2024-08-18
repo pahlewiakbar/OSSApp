@@ -9,7 +9,7 @@ class ProfilUpdate extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var mahasiswa = Get.arguments;
-    ProfilController controller = ProfilController();
+    var controller = ProfilController();
     controller.nameC.text = mahasiswa['nama'];
     controller.nimC.text = '${mahasiswa['nim']}';
     controller.kelaminC.text = mahasiswa['kelamin'];

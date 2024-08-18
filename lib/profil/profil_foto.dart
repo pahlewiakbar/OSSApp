@@ -15,7 +15,7 @@ class ProfilFoto extends StatefulWidget {
 
 class _ProfilFotoState extends State<ProfilFoto> {
   var mahasiswa = Get.arguments;
-  ProfilController controller = ProfilController();
+  var controller = ProfilController();
   File? image;
 
   Future<void> gallery() async {

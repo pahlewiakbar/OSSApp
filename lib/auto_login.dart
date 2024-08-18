@@ -25,11 +25,12 @@ class AutoLogin extends StatelessWidget {
         return StreamBuilder(
           stream: FirebaseAuth.instance.authStateChanges(),
           builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.active) {
-              if (snapshot.hasData) {
-                return const HomeView();
-              }
-              return const LoginView();
+            if (snapshot.hasError) {
+              return const Scaffold(
+                body: Center(
+                  child: Text('Terjadi Kesalahan'),
+                ),
+              );
             }
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Scaffold(
@@ -38,11 +39,11 @@ class AutoLogin extends StatelessWidget {
                 ),
               );
             }
-            return const Scaffold(
-              body: Center(
-                child: Text('Terjadi Kesalahan'),
-              ),
-            );
+            if (snapshot.hasData) {
+              return const HomeView();
+            } else {
+              return const LoginView();
+            }
           },
         );
       },

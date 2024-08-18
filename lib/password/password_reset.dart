@@ -7,7 +7,7 @@ class PasswordReset extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    PasswordController controller = PasswordController();
+    var controller = PasswordController();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Lupa Password'),

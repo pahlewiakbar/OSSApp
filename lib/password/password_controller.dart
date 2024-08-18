@@ -6,6 +6,7 @@ import '../login/login_view.dart';
 
 class PasswordController {
   var formKey = GlobalKey<FormState>();
+  var isObsecure = true.obs;
   TextEditingController emailC = TextEditingController();
   TextEditingController passC = TextEditingController();
   FirebaseAuth auth = FirebaseAuth.instance;
@@ -16,7 +17,7 @@ class PasswordController {
       try {
         await user.updatePassword(passC.text);
         await auth.signOut();
-        Get.offAll(() => const LoginView(), transition: Transition.cupertino);
+        Get.offAll(() => const LoginView());
         Get.snackbar('Ubah Password', 'Berhasil mengubah Password');
       } catch (e) {
         Get.snackbar('Terjadi Kesalahan', 'Gagal mengubah Password');

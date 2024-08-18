@@ -5,19 +5,12 @@ import '../password/password_reset.dart';
 import '../register/register_view.dart';
 import 'login_controller.dart';
 
-class LoginView extends StatefulWidget {
+class LoginView extends StatelessWidget {
   const LoginView({super.key});
 
   @override
-  State<LoginView> createState() => _LoginViewState();
-}
-
-class _LoginViewState extends State<LoginView> {
-  LoginController controller = LoginController();
-  bool isObsecure = true;
-
-  @override
   Widget build(BuildContext context) {
+    var controller = LoginController();
     return Scaffold(
       body: SafeArea(
           child: Form(
@@ -65,31 +58,26 @@ class _LoginViewState extends State<LoginView> {
             const SizedBox(
               height: 15,
             ),
-            TextFormField(
-              autocorrect: false,
-              keyboardType: TextInputType.visiblePassword,
-              controller: controller.passC,
-              obscureText: isObsecure,
-              decoration: InputDecoration(
-                  hintText: 'Password',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  suffixIcon: IconButton(
-                      onPressed: () {
-                        setState(() {
-                          isObsecure = !isObsecure;
-                        });
-                      },
-                      icon: !isObsecure
-                          ? const Icon(
-                              Icons.remove_red_eye,
-                              color: Colors.blue,
-                            )
-                          : const Icon(
-                              Icons.remove_red_eye,
-                              color: Colors.grey,
-                            ))),
+            Obx(
+              () => TextFormField(
+                autocorrect: false,
+                keyboardType: TextInputType.visiblePassword,
+                controller: controller.passC,
+                obscureText: controller.isObsecure.value,
+                decoration: InputDecoration(
+                    hintText: 'Password',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    suffixIcon: IconButton(
+                        onPressed: () => controller.isObsecure.toggle(),
+                        icon: Icon(
+                          Icons.remove_red_eye,
+                          color: !controller.isObsecure.value
+                              ? Colors.blue
+                              : Colors.grey,
+                        ))),
+              ),
             ),
             const SizedBox(
               height: 20,
@@ -102,12 +90,10 @@ class _LoginViewState extends State<LoginView> {
                 },
                 child: const Text('Masuk')),
             TextButton(
-                onPressed: () => Get.to(() => const RegisterView(),
-                    transition: Transition.cupertino),
+                onPressed: () => Get.to(() => const RegisterView()),
                 child: const Text('Buat Akun')),
             TextButton(
-                onPressed: () => Get.to(() => const PasswordReset(),
-                    transition: Transition.cupertino),
+                onPressed: () => Get.to(() => const PasswordReset()),
                 child: const Text('Lupa Password'))
           ],
         ),

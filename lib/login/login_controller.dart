@@ -6,6 +6,7 @@ import '../home/home_view.dart';
 
 class LoginController {
   var formKey = GlobalKey<FormState>();
+  var isObsecure = true.obs;
   TextEditingController emailC = TextEditingController();
   TextEditingController passC = TextEditingController();
   FirebaseAuth auth = FirebaseAuth.instance;
@@ -14,7 +15,7 @@ class LoginController {
     try {
       await auth.signInWithEmailAndPassword(
           email: emailC.text, password: passC.text);
-      Get.offAll(() => const HomeView(), transition: Transition.cupertino);
+      Get.offAll(() => const HomeView());
     } catch (e) {
       Get.snackbar('Terjadi Kesalahan', 'Email atau Password salah');
     }

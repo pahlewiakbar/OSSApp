@@ -5,14 +5,15 @@ import 'package:flutter/material.dart';
 
 import '../home/home_view.dart';
 
-class RegisterController {
+class RegisterController extends GetxController {
   var formKey = GlobalKey<FormState>();
+  var isObsecure = true.obs;
   TextEditingController emailC = TextEditingController();
   TextEditingController passC = TextEditingController();
   TextEditingController nameC = TextEditingController();
   TextEditingController tanggalC = TextEditingController();
-  String? pilihKelamin;
-  String? pilihProdi;
+  var pilihKelamin = ''.obs;
+  var pilihProdi = ''.obs;
   FirebaseAuth auth = FirebaseAuth.instance;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
@@ -23,16 +24,16 @@ class RegisterController {
           email: emailC.text, password: passC.text);
       await user.doc(emailC.text).set({
         'nama': nameC.text,
-        'kelamin': pilihKelamin,
+        'kelamin': pilihKelamin.value,
         'tanggal': tanggalC.text,
-        'prodi': pilihProdi,
+        'prodi': pilihProdi.value,
         'nim': 0,
         'semester': 1,
         'ajaran': 'Ganjil',
         'lunas': true,
         'foto': ''
       });
-      Get.offAll(() => const HomeView(), transition: Transition.cupertino);
+      Get.offAll(() => const HomeView());
     } catch (e) {
       Get.snackbar('Terjadi Kesalahan', 'Email sudah digunakan');
     }

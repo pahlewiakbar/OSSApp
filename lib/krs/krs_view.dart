@@ -22,8 +22,8 @@ class KrsView extends StatelessWidget {
           : ListView(
               children: [
                 ListTile(
-                  onTap: () => Get.to(() => const KrsSaya(),
-                      arguments: mahasiswa, transition: Transition.cupertino),
+                  onTap: () =>
+                      Get.to(() => const KrsSaya(), arguments: mahasiswa),
                   leading: const Icon(Icons.book),
                   title: const Text(
                     "KRS Saya",
@@ -32,8 +32,8 @@ class KrsView extends StatelessWidget {
                   trailing: const Icon(Icons.arrow_forward_ios),
                 ),
                 ListTile(
-                  onTap: () => Get.to(() => const KrsPaket(),
-                      transition: Transition.cupertino, arguments: mahasiswa),
+                  onTap: () =>
+                      Get.to(() => const KrsPaket(), arguments: mahasiswa),
                   leading: const Icon(Icons.account_box),
                   title: const Text(
                     "KRS Paket",
@@ -42,8 +42,8 @@ class KrsView extends StatelessWidget {
                   trailing: const Icon(Icons.arrow_forward_ios),
                 ),
                 ListTile(
-                  onTap: () => Get.to(() => const KrsPilihan(),
-                      transition: Transition.cupertino, arguments: mahasiswa),
+                  onTap: () =>
+                      Get.to(() => const KrsPilihan(), arguments: mahasiswa),
                   leading: const Icon(Icons.note),
                   title: const Text(
                     "KRS Pilihan",

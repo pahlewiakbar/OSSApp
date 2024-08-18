@@ -3,10 +3,15 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 
 import '../login/login_view.dart';
+import '../profil/profil_view.dart';
+import 'home_widget.dart';
 
 class HomeController {
   FirebaseAuth auth = FirebaseAuth.instance;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
+  var index = 0.obs;
+  var indicator = 0.obs;
+  List homeWidget = [const HomeWidget(), const ProfilView()];
   List berita = [
     'https://www.urindo.ac.id/wp-content/uploads/2024/04/banner-web-gelombang.jpg',
     'https://www.urindo.ac.id/wp-content/uploads/2024/05/Jalur-prestasi-masuk-URINDO.jpg',
@@ -16,7 +21,7 @@ class HomeController {
   Future<void> logout() async {
     try {
       await auth.signOut();
-      Get.offAll(() => const LoginView(), transition: Transition.cupertino);
+      Get.offAll(() => const LoginView());
     } catch (e) {
       Get.snackbar('Terjadi Kesalahan', 'Tidak bisa keluar');
     }

@@ -1,20 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import 'password_controller.dart';
 
-class PasswordUpdate extends StatefulWidget {
+class PasswordUpdate extends StatelessWidget {
   const PasswordUpdate({super.key});
 
   @override
-  State<PasswordUpdate> createState() => _PasswordUpdateState();
-}
-
-class _PasswordUpdateState extends State<PasswordUpdate> {
-  PasswordController controller = PasswordController();
-  bool isObsecure = true;
-
-  @override
   Widget build(BuildContext context) {
+    var controller = PasswordController();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Ubah Password'),
@@ -24,32 +18,27 @@ class _PasswordUpdateState extends State<PasswordUpdate> {
           child: ListView(
             padding: const EdgeInsets.all(15),
             children: [
-              TextFormField(
-                autocorrect: false,
-                keyboardType: TextInputType.visiblePassword,
-                controller: controller.passC,
-                obscureText: isObsecure,
-                validator: controller.validatePassword,
-                decoration: InputDecoration(
-                    hintText: 'Masukkan Password baru',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    suffixIcon: IconButton(
-                        onPressed: () {
-                          setState(() {
-                            isObsecure = !isObsecure;
-                          });
-                        },
-                        icon: !isObsecure
-                            ? const Icon(
-                                Icons.remove_red_eye,
-                                color: Colors.blue,
-                              )
-                            : const Icon(
-                                Icons.remove_red_eye,
-                                color: Colors.grey,
-                              ))),
+              Obx(
+                () => TextFormField(
+                  autocorrect: false,
+                  keyboardType: TextInputType.visiblePassword,
+                  controller: controller.passC,
+                  obscureText: controller.isObsecure.value,
+                  validator: controller.validatePassword,
+                  decoration: InputDecoration(
+                      hintText: 'Masukkan Password baru',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      suffixIcon: IconButton(
+                          onPressed: () => controller.isObsecure.toggle(),
+                          icon: Icon(
+                            Icons.remove_red_eye,
+                            color: !controller.isObsecure.value
+                                ? Colors.blue
+                                : Colors.grey,
+                          ))),
+                ),
               ),
               const SizedBox(
                 height: 15,

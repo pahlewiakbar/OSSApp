@@ -9,7 +9,7 @@ class KrsPaket extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var mahasiswa = Get.arguments;
-    KrsController controller = KrsController();
+    var controller = KrsController();
     return Scaffold(
       appBar: AppBar(
         title: const Text('KRS Paket'),
@@ -36,14 +36,14 @@ class KrsPaket extends StatelessWidget {
             stream:
                 controller.krsPaket(mahasiswa['prodi'], mahasiswa['semester']),
             builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
               if (snapshot.hasError) {
                 return const Center(
                   child: Text('Terjadi Kesalahan'),
+                );
+              }
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(
+                  child: CircularProgressIndicator(),
                 );
               }
               var data = snapshot.data!.docs;
@@ -51,52 +51,54 @@ class KrsPaket extends StatelessWidget {
                 return const Center(
                   child: Text('Belum ada data'),
                 );
-              }
-              return Column(
-                children: data.map((e) {
-                  var krs = e.data();
-                  return Container(
-                    padding: const EdgeInsets.all(15),
-                    margin: const EdgeInsets.only(bottom: 15),
-                    decoration: BoxDecoration(
-                        color: Colors.grey.shade300,
-                        borderRadius: BorderRadius.circular(15)),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                krs['matkul'],
-                                style: const TextStyle(
-                                    fontSize: 15, fontWeight: FontWeight.bold),
-                              ),
-                              const SizedBox(
-                                height: 3,
-                              ),
-                              Text(
-                                krs['hari'],
-                                style: const TextStyle(fontSize: 15),
-                              ),
-                            ],
+              } else {
+                return Column(
+                  children: data.map((e) {
+                    var krs = e.data();
+                    return Container(
+                      padding: const EdgeInsets.all(15),
+                      margin: const EdgeInsets.only(bottom: 15),
+                      decoration: BoxDecoration(
+                          color: Colors.grey.shade300,
+                          borderRadius: BorderRadius.circular(15)),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  krs['matkul'],
+                                  style: const TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                const SizedBox(
+                                  height: 3,
+                                ),
+                                Text(
+                                  krs['hari'],
+                                  style: const TextStyle(fontSize: 15),
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                        ElevatedButton(
-                            onPressed: () => controller.simpanKrs(
-                                mahasiswa['semester'], e.id, krs),
-                            style: ButtonStyle(
-                                shape: MaterialStatePropertyAll(
-                                    RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(10)))),
-                            child: const Text('Simpan'))
-                      ],
-                    ),
-                  );
-                }).toList(),
-              );
+                          ElevatedButton(
+                              onPressed: () => controller.simpanKrs(
+                                  mahasiswa['semester'], e.id, krs),
+                              style: ButtonStyle(
+                                  shape: MaterialStatePropertyAll(
+                                      RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10)))),
+                              child: const Text('Simpan'))
+                        ],
+                      ),
+                    );
+                  }).toList(),
+                );
+              }
             },
           )
         ],

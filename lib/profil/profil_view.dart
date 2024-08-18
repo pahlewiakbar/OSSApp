@@ -12,7 +12,7 @@ class ProfilView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    HomeController controller = HomeController();
+    var controller = HomeController();
     return StreamBuilder(
       stream: controller.streamMahasiswa(),
       builder: (context, snapshot) {
@@ -26,7 +26,6 @@ class ProfilView extends StatelessWidget {
                   GestureDetector(
                     onTap: () => Get.to(
                       () => const ProfilFoto(),
-                      transition: Transition.cupertino,
                       arguments: mahasiswa,
                     ),
                     child: CircleAvatar(
@@ -62,7 +61,6 @@ class ProfilView extends StatelessWidget {
               ListTile(
                 onTap: () => Get.to(
                   () => const ProfilUpdate(),
-                  transition: Transition.cupertino,
                   arguments: mahasiswa,
                 ),
                 leading: const Icon(Icons.people),
@@ -73,8 +71,8 @@ class ProfilView extends StatelessWidget {
                 trailing: const Icon(Icons.arrow_forward_ios),
               ),
               ListTile(
-                onTap: () => Get.to(() => const ProfilKrs(),
-                    transition: Transition.cupertino, arguments: mahasiswa),
+                onTap: () =>
+                    Get.to(() => const ProfilKrs(), arguments: mahasiswa),
                 leading: const Icon(Icons.settings),
                 title: const Text(
                   "Pengaturan KRS",
@@ -83,8 +81,7 @@ class ProfilView extends StatelessWidget {
                 trailing: const Icon(Icons.arrow_forward_ios),
               ),
               ListTile(
-                onTap: () => Get.to(() => const PasswordUpdate(),
-                    transition: Transition.cupertino),
+                onTap: () => Get.to(() => const PasswordUpdate()),
                 leading: const Icon(Icons.key),
                 title: const Text(
                   "Ubah Password",

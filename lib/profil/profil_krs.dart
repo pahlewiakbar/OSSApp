@@ -3,19 +3,13 @@ import 'package:get/get.dart';
 
 import 'profil_controller.dart';
 
-class ProfilKrs extends StatefulWidget {
+class ProfilKrs extends StatelessWidget {
   const ProfilKrs({super.key});
 
   @override
-  State<ProfilKrs> createState() => _ProfilKrsState();
-}
-
-class _ProfilKrsState extends State<ProfilKrs> {
-  var mahasiswa = Get.arguments;
-  ProfilController controller = ProfilController();
-
-  @override
   Widget build(BuildContext context) {
+    var mahasiswa = Get.arguments;
+    var controller = ProfilController();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Pengaturan KRS'),
@@ -45,9 +39,7 @@ class _ProfilKrsState extends State<ProfilKrs> {
                           value: e, child: Text('Semester $e')))
                       .toList(),
                   onChanged: (value) {
-                    setState(() {
-                      mahasiswa['semester'] = value;
-                    });
+                    mahasiswa['semester'] = value;
                   },
                 ),
                 const SizedBox(
@@ -70,9 +62,7 @@ class _ProfilKrsState extends State<ProfilKrs> {
                       .map((e) => DropdownMenuItem(value: e, child: Text(e)))
                       .toList(),
                   onChanged: (value) {
-                    setState(() {
-                      mahasiswa['ajaran'] = value;
-                    });
+                    mahasiswa['ajaran'] = value;
                   },
                 ),
                 const SizedBox(

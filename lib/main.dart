@@ -20,6 +20,7 @@ class MainApp extends StatelessWidget {
     return const GetMaterialApp(
       title: 'OSS Urindo',
       debugShowCheckedModeBanner: false,
+      defaultTransition: Transition.cupertino,
       home: AutoLogin(),
     );
   }
